@@ -25,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = models.User
         fields = [
             'id', 'username', 'first_name', 'last_name',
-            'password', 'confirm_password', 'avatar'
+            'password', 'confirm_password', 'avatar',
         ]
 
     def save(self, **kwargs):
@@ -82,6 +82,15 @@ class CommentSerializer(serializers.ModelSerializer):
             'users_disliked', 'comments', 'creation_date'
         ]
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        obj = models.Comment.objects.get(id=instance.id)
+        data['author'] = UserSerializer(instance.author).data
+        data['comments'] = CommentSerializer(
+            obj.list_comments(), many=True
+        ).data
+        return data
+
 
 class PodcastSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
@@ -95,6 +104,12 @@ class PodcastSerializer(serializers.ModelSerializer):
             'likes', 'users_liked', 'users_disliked',
             'authors', 'comments', 'creation_date'
         ]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['authors'] = UserSerializer(instance.authors, many=True).data
+        data['comments'] = CommentSerializer(instance.comments, many=True).data
+        return data
 
     def save(self, **kwargs):
         podcast = super().save(**kwargs)

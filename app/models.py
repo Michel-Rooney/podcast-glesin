@@ -1,14 +1,8 @@
-# from collections import defaultdict
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    ROLE = (
-        ('C', 'Cliente'),
-        ('A', 'Admin')
-    )
-    role = models.CharField(max_length=1, choices=ROLE)
     avatar = models.ImageField(
         upload_to='avatar/%Y/%m/%d/', blank=True, null=True
     )
@@ -21,7 +15,7 @@ class User(AbstractUser):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     comments = models.ManyToManyField('self', blank=True)
     likes = models.IntegerField(blank=True, null=True, default=0)
     users_liked = models.ManyToManyField(
