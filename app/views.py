@@ -43,7 +43,7 @@ class UserViewSets(ModelViewSet):
 class CommentViewSets(ModelViewSet):
     queryset = models.Comment.objects.all()
     serializer_class = serializers.CommentSerializer
-    permission_classes = [IsOwnerComment]
+    permission_classes = [IsOwnerComment, IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save()
@@ -69,9 +69,9 @@ class CommentViewSets(ModelViewSet):
         entity.comments.add(serializer.instance)
         return serializer
 
-    @action(['get'], detail=True)
+    @action(['get'], detail=True, permission_classes=[IsAuthenticated])
     def like(self, request, pk=None):
-        obj = get_object_or_404(models.Podcast, pk=pk)
+        obj = get_object_or_404(models.Comment, pk=pk)
 
         if request.user in obj.users_liked.all():
             raise ValidationError({
@@ -85,9 +85,9 @@ class CommentViewSets(ModelViewSet):
 
         return Response(status=status.HTTP_200_OK)
 
-    @action(['get'], detail=True)
-    def deslike(self, request, pk=None):
-        obj = get_object_or_404(models.Podcast, pk=pk)
+    @action(['get'], detail=True, permission_classes=[IsAuthenticated])
+    def dislike(self, request, pk=None):
+        obj = get_object_or_404(models.Comment, pk=pk)
 
         if request.user in obj.users_disliked.all():
             raise ValidationError({
