@@ -33,7 +33,6 @@ router.register('api/users', views.UserViewSets, basename='user-api')
 router.register('api/comment', views.CommentViewSets, basename='comment-api')
 router.register('api/podcast', views.PodcastViewSets, basename='podcast-api')
 
-print(router.urls)
 
 urlpatterns = router.urls
 urlpatterns += urlpatterns_jwt

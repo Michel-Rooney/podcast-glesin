@@ -7,9 +7,6 @@ class User(AbstractUser):
         upload_to='avatar/%Y/%m/%d/', blank=True, null=True
     )
 
-    groups = None
-    user_permissions = None
-
     def __str__(self):
         return self.username
 
