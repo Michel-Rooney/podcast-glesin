@@ -37,7 +37,7 @@ cd podcast-glesin
 
 Crie um ambiente virtual:
 
-```python
+```
 python3 -m venv venv
 ```
 
@@ -57,13 +57,13 @@ source deactivate
 
 Instale as dependencias:
 
-```python
+```
 pip install -r requirements.txt
 ```
 
 Inicie o projeto:
 
-```python
+```
 python manage.py runserver
 ```
 
@@ -76,4 +76,4 @@ python manage.py runserver
 
 ## ✒️ Autores
 
-* [Michel-Roney](https://github.com/Michel-Rooney/) - *Dev. Backend*
+* [Michel-Rooney](https://github.com/Michel-Rooney/) - *Dev. Backend*
