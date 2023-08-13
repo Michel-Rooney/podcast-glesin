@@ -127,7 +127,7 @@ class PodcastSerializer(serializers.ModelSerializer):
 
     def validate_title(self, attr):
         exist = get_podcast(title=attr)
-        if exist:
+        if exist and (self.instance.id != exist.id):
             self.messages['title'].append('Esse titulo já está em uso.')
         return attr
 
