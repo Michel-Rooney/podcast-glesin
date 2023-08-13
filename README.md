@@ -64,6 +64,14 @@ Instale as dependencias:
 pip install -r requirements.txt
 ```
 
+Copie o arquivo .env-example para .env:
+
+```
+cp .env-example .env
+
+# No arquivo .env substitua a SECRET_KEY para qualquer coisa
+```
+
 Inicie o projeto:
 
 ```
