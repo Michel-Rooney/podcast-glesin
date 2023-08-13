@@ -2,6 +2,9 @@
 
 O projeto consiste no desenvolvimento de uma API (Interface de Programação de Aplicativos) para um Sistema de Gerenciamento de Podcasts, com o objetivo de permitir aos usuários criar, visualizar, atualizar e deletar podcasts em suas listas pessoais. A API será construída utilizando tecnologias web modernas e seguirá os princípios REST (Representational State Transfer) para garantir a comunicação eficiente entre o cliente e o servidor.
 
+### 📋 Documentação
+[Podcast Glesin API](https://documenter.getpostman.com/view/23133439/2s9Xy5LW2t)
+
 ## 🚀 Começando
 
 Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
