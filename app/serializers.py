@@ -88,9 +88,16 @@ class CommentSerializer(serializers.ModelSerializer):
         data['author'] = UserSerializer(
             instance.author, context=self.context
         ).data
+        podcast = get_podcast(comments__id=instance.id)
+
+        comments = instance.comments
+        if podcast is None:
+            comments = instance.list_comments() 
+
         data['comments'] = CommentSerializer(
-            instance.list_comments(), many=True, context=self.context
+            comments, many=True, context=self.context
         ).data
+
         return data
 
 
