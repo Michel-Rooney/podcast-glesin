@@ -85,12 +85,11 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        obj = models.Comment.objects.get(id=instance.id)
         data['author'] = UserSerializer(
             instance.author, context=self.context
         ).data
         data['comments'] = CommentSerializer(
-            obj.list_comments(), many=True, context=self.context
+            instance.list_comments(), many=True, context=self.context
         ).data
         return data
 

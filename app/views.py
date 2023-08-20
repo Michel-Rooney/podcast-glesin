@@ -66,6 +66,7 @@ class CommentViewSets(ModelViewSet):
             raise ValidationError({
                 'detail': 'Selecione um id válido.'
             })
+
         entity.comments.add(serializer.instance)
         return serializer
 
