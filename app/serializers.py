@@ -12,6 +12,7 @@ from .utils import get_podcast
 
 
 class UserSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='app:user-api-detail')
     password = serializers.CharField(write_only=True)
     confirm_password = serializers.CharField(
         write_only=True
@@ -24,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = [
-            'id', 'username', 'first_name', 'last_name',
+            'url', 'id', 'username', 'first_name', 'last_name',
             'password', 'confirm_password', 'avatar',
         ]
 
@@ -85,9 +86,11 @@ class CommentSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         obj = models.Comment.objects.get(id=instance.id)
-        data['author'] = UserSerializer(instance.author).data
+        data['author'] = UserSerializer(
+            instance.author, context=self.context
+        ).data
         data['comments'] = CommentSerializer(
-            obj.list_comments(), many=True
+            obj.list_comments(), many=True, context=self.context
         ).data
         return data
 
@@ -97,18 +100,26 @@ class PodcastSerializer(serializers.ModelSerializer):
         super().__init__(*args, **kwargs)
         self.messages = defaultdict(list)
 
+    url = serializers.HyperlinkedIdentityField(
+        view_name='app:podcast-api-detail'
+    )
+
     class Meta:
         model = models.Podcast
         fields = [
-            'id', 'cover', 'title', 'description', 'audio',
+            'url', 'id', 'cover', 'title', 'description', 'audio',
             'likes', 'users_liked', 'users_disliked',
             'authors', 'comments', 'creation_date'
         ]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data['authors'] = UserSerializer(instance.authors, many=True).data
-        data['comments'] = CommentSerializer(instance.comments, many=True).data
+        data['authors'] = UserSerializer(
+            instance.authors, many=True, context=self.context
+        ).data
+        data['comments'] = CommentSerializer(
+            instance.comments, many=True, context=self.context
+        ).data
         return data
 
     def save(self, **kwargs):
