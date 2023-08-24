@@ -72,7 +72,7 @@ class UserViewAPITEST(AppBaseAPITest):
         data = {
             'title': TITLE,
             'audio': open(
-                settings.BASE_DIR / 'media/audio/teste/LosT.mp3', 'rb'
+                settings.BASE_DIR / 'media/audio/test/LosT.mp3', 'rb'
             ),
             'authors': self.user.id
         }
@@ -91,7 +91,7 @@ class UserViewAPITEST(AppBaseAPITest):
         data = {
             'title': 'Title',
             'audio': open(
-                settings.BASE_DIR / 'media/audio/teste/LosT.mp3', 'rb'
+                settings.BASE_DIR / 'media/audio/test/LosT.mp3', 'rb'
             ),
             'authors': self.user.id
         }
@@ -113,7 +113,7 @@ class UserViewAPITEST(AppBaseAPITest):
         data = {
             'title': TITLE,
             'audio': open(
-                settings.BASE_DIR / 'media/audio/teste/LosT.mp3', 'rb'
+                settings.BASE_DIR / 'media/audio/test/LosT.mp3', 'rb'
             ),
             'authors': self.user.id
         }
@@ -134,7 +134,7 @@ class UserViewAPITEST(AppBaseAPITest):
         data = {
             'title': TITLE,
             'audio': open(
-                settings.BASE_DIR / 'media/audio/teste/LosT.mp3', 'rb'
+                settings.BASE_DIR / 'media/audio/test/LosT.mp3', 'rb'
             ),
             'authors': self.user.id
         }

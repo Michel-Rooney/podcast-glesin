@@ -41,7 +41,7 @@ class UserViewSets(ModelViewSet):
 
 
 class CommentViewSets(ModelViewSet):
-    queryset = models.Comment.objects.all()
+    queryset = utils.get_comments()
     serializer_class = serializers.CommentSerializer
     permission_classes = [IsOwnerComment, IsAuthenticated]
 
@@ -105,7 +105,7 @@ class CommentViewSets(ModelViewSet):
 
 
 class PodcastViewSets(ModelViewSet):
-    queryset = models.Podcast.objects.all()
+    queryset = utils.get_podcasts()
     serializer_class = serializers.PodcastSerializer
     permission_classes = [IsAuthenticated]
 

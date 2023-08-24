@@ -17,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(
         write_only=True
     )
+    is_superuser = serializers.BooleanField(read_only=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -26,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = models.User
         fields = [
             'url', 'id', 'username', 'first_name', 'last_name',
-            'password', 'confirm_password', 'avatar',
+            'password', 'confirm_password', 'avatar', 'is_superuser'
         ]
 
     def save(self, **kwargs):
@@ -92,7 +93,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
         comments = instance.comments
         if podcast is None:
-            comments = instance.list_comments() 
+            comments = instance.list_comments()
 
         data['comments'] = CommentSerializer(
             comments, many=True, context=self.context
