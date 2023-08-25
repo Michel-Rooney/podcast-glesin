@@ -32,13 +32,13 @@ python --version
 Clone o repositório do projeto:
 
 ```git
-git clone https://github.com/Michel-Rooney/podcast-glesin.git
+git clone https://github.com/Michel-Rooney/teen-pod.git
 ```
 
 Entre na pasta:
 
 ```
-cd podcast-glesin
+cd teen-pod
 ```
 
 Crie um ambiente virtual:
@@ -53,7 +53,7 @@ Ative o ambiente virtual:
 source venv/bin/activate
 
 # Quando ativo, irar aparecer (venv) no inicio
-(venv) user@maquina ~/podcast-glesin$
+(venv) user@maquina ~/teen-pod$
 ```
 
 **Note:** Para desativar rode o comando
