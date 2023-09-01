@@ -1,7 +1,9 @@
+import os
 from django.urls import reverse
 from django.conf import settings
 from rest_framework import status
 from .base import AppBaseAPITest
+from ..models import User
 
 
 class UserViewAPITEST(AppBaseAPITest):
@@ -96,6 +98,11 @@ class UserViewAPITEST(AppBaseAPITest):
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(data['first_name'], response.data['first_name'])
+
+        user = User.objects.get(id=response.data['id'])
+
+        if os.path.exists(user.avatar.path):
+            os.remove(user.avatar.path)
 
     def test_admin_app_user_api_delete_return_status_code_200_success(self):
         token = f'Bearer {self.make_user_and_token(is_admin=True)}'
@@ -212,6 +219,11 @@ class UserViewAPITEST(AppBaseAPITest):
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(data['first_name'], response.data['first_name'])
+
+        user = User.objects.get(id=response.data['id'])
+
+        if os.path.exists(user.avatar.path):
+            os.remove(user.avatar.path)
 
     def test_app_user_api_delete_return_status_code_403_forbidden(self):
         user = self.create_user()

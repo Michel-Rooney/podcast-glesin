@@ -101,7 +101,9 @@ class UserViewAPITEST(AppBaseAPITest):
         self.assertEqual(data['title'], response.data['title'])
 
         podcast = Podcast.objects.get(id=response.data['id'])
-        os.remove(podcast.audio.path)
+
+        if os.path.exists(podcast.audio.path):
+            os.remove(podcast.audio.path)
 
     def test_admin_app_podcast_api_update_title_exist(self):
         TITLE = 'Userd Titulo'
@@ -145,6 +147,14 @@ class UserViewAPITEST(AppBaseAPITest):
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(data['title'], response.data['title'])
+
+        podcast = Podcast.objects.get(id=response.data['id'])
+
+        if os.path.exists(podcast.cover.path):
+            os.remove(podcast.cover.path)
+
+        if os.path.exists(podcast.audio.path):
+            os.remove(podcast.audio.path)
 
     def test_admin_app_podcast_api_delete_return_status_code_204_success(self):
         token = f'Bearer {self.make_user_and_token(is_admin=True)}'
