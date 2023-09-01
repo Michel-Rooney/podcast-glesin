@@ -95,7 +95,11 @@ if USE_EXTERNAL_DATABASE:
             'NAME': 'Cluster0',
             'ENFORCE_SCHEMA': False,
             'CLIENT': {
-                'host': os.environ.get('DATABASE_URL', '')
+                'host': os.environ.get('DATABASE_URL'),
+                'username': os.environ.get('USERNAME_DB'),
+                'password': os.environ.get('PASSWORD_DB'),
+                'authSource': os.environ.get('AUTH_SOURCE'),
+                'ssl': True,
             }
         }
     }
