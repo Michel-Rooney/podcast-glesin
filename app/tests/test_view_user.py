@@ -1,4 +1,5 @@
 from django.urls import reverse
+from django.conf import settings
 from rest_framework import status
 from .base import AppBaseAPITest
 
@@ -84,6 +85,9 @@ class UserViewAPITEST(AppBaseAPITest):
         url = reverse('app:user-api-detail', args=(self.user.id,))
 
         data = {
+            'avatar': open(
+                settings.BASE_DIR / 'media/cover/test/Pingu.png', 'rb'
+            ),
             'first_name': 'Name',
             'password': 'Pass',
             'confirm_password': 'Pass'
@@ -197,6 +201,9 @@ class UserViewAPITEST(AppBaseAPITest):
         url = reverse('app:user-api-detail', args=(self.user.id,))
 
         data = {
+            'avatar': open(
+                settings.BASE_DIR / 'media/cover/test/Pingu.png', 'rb'
+            ),
             'first_name': 'Name',
             'password': 'Pass',
             'confirm_password': 'Pass'

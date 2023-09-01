@@ -1,5 +1,8 @@
+import os
+import shutil
 from django.test import TestCase
 from django.urls import reverse
+from django.conf import settings
 from rest_framework import test
 from app.models import User, Podcast, Comment
 
@@ -9,10 +12,15 @@ class AppBaseAPITest(test.APITestCase, TestCase):
             self, username='UserAdmin', password='PassAdmin',
             email='testadmin@gmail.com'
     ):
+        source_path = settings.BASE_DIR / 'media/cover/test/Pingu.png'
+        avatar_path = settings.BASE_DIR / 'media/cover/test/Pingu_avatar.png'
+        shutil.copy(source_path, avatar_path)
+
         self.user = User.objects.create_superuser(
             username=username,
             password=password,
             email=email,
+            avatar=os.path.join(avatar_path),
         )
         return self.user
 
@@ -20,10 +28,15 @@ class AppBaseAPITest(test.APITestCase, TestCase):
             self, username='User', password='Pass',
             email='teste@gmail.com'
     ):
+        source_path = settings.BASE_DIR / 'media/cover/test/Pingu.png'
+        avatar_path = settings.BASE_DIR / 'media/cover/test/Pingu_avatar.png'
+        shutil.copy(source_path, avatar_path)
+
         self.user = User.objects.create_user(
             username=username,
             password=password,
-            email=email
+            email=email,
+            avatar=os.path.join(avatar_path),
         )
         return self.user
 
@@ -46,10 +59,20 @@ class AppBaseAPITest(test.APITestCase, TestCase):
     def create_podcast(
             self, title='Title', audio='', authors=[]
     ):
+        source_path = settings.BASE_DIR / 'media/cover/test/Pingu.png'
+        cover_path = settings.BASE_DIR / 'media/cover/test/Pingu_test.png'
+        shutil.copy(source_path, cover_path)
+
+        source_path = settings.BASE_DIR / 'media/audio/test/LosT.mp3'
+        audio_path = settings.BASE_DIR / 'media/audio/test/LosT_test.mp3'
+        shutil.copy(source_path, audio_path)
+
         self.podcast = Podcast.objects.create(
+            cover=os.path.join(cover_path),
             title=title,
-            audio=''
+            audio=os.path.join(audio_path),
         )
+
         if authors:
             for author in authors:
                 self.podcast.authors.add(author)

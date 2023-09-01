@@ -26,9 +26,16 @@ class UserViewSets(ModelViewSet):
             return [IsAdminUser()]
         return permissions
 
+    def perform_update(self, serializer):
+        avatar_path = serializer.instance.avatar.path
+        if os.path.exists(avatar_path):
+            os.remove(avatar_path)
+        return super().perform_update(serializer)
+
     def perform_destroy(self, instance):
-        if instance.avatar:
-            os.remove(instance.avatar.path)
+        avatar_path = instance.avatar.path
+        if os.path.exists(avatar_path):
+            os.remove(avatar_path)
         return super().perform_destroy(instance)
 
     @action(['get'], False, permission_classes=[IsAuthenticated])
@@ -115,12 +122,28 @@ class PodcastViewSets(ModelViewSet):
             return [IsAdminUser()]
         return permissions
 
-    def perform_destroy(self, instance):
-        if instance.cover:
-            os.remove(instance.cover.path)
+    def perform_update(self, serializer):
+        cover_path = serializer.instance.cover.path
+        audio_path = serializer.instance.audio.path
 
-        if instance.audio:
-            os.remove(instance.audio.path)
+        if os.path.exists(cover_path):
+            os.remove(cover_path)
+
+        if os.path.exists(audio_path):
+            os.remove(audio_path)
+
+        return super().perform_update(serializer)
+
+    def perform_destroy(self, instance):
+        cover_path = instance.cover.path
+        audio_path = instance.audio.path
+
+        if os.path.exists(cover_path):
+            os.remove(cover_path)
+
+        if os.path.exists(audio_path):
+            os.remove(audio_path)
+
         return super().perform_destroy(instance)
 
     @action(['get'], detail=True, permission_classes=[IsAuthenticated])

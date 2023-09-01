@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
-import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -91,10 +90,14 @@ USE_EXTERNAL_DATABASE = True if os.environ.get('USE_EXTERNAL_DATABASE') == '1' e
 
 if USE_EXTERNAL_DATABASE:
     DATABASES = {
-        'default': dj_database_url.config(
-            default=os.environ.get('DATABASE_URL'),
-            conn_max_age=600
-        )
+        'default': {
+            'ENGINE': 'djongo',
+            'NAME': 'Cluster0',
+            'ENFORCE_SCHEMA': False,
+            'CLIENT': {
+                'host': os.environ.get('DATABASE_URL', '')
+            }
+        }
     }
 else:
     DATABASES = {

@@ -132,6 +132,9 @@ class UserViewAPITEST(AppBaseAPITest):
         url = reverse('app:podcast-api-detail', args=(podcast.id,))
 
         data = {
+            'cover': open(
+                settings.BASE_DIR / 'media/cover/test/Pingu.png', 'rb'
+            ),
             'title': TITLE,
             'audio': open(
                 settings.BASE_DIR / 'media/audio/test/LosT.mp3', 'rb'
@@ -143,10 +146,7 @@ class UserViewAPITEST(AppBaseAPITest):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(data['title'], response.data['title'])
 
-        podcast = Podcast.objects.get(id=response.data['id'])
-        os.remove(podcast.audio.path)
-
-    def test_admin_app_podcast_api_delete_return_status_code_200_success(self):
+    def test_admin_app_podcast_api_delete_return_status_code_204_success(self):
         token = f'Bearer {self.make_user_and_token(is_admin=True)}'
         podcast = self.create_podcast()
         url = reverse('app:podcast-api-detail', args=(podcast.id,))
