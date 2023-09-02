@@ -131,6 +131,6 @@ db copy.sqlite3
 static/
 
 # Add again for course purpose
-!db.sqlite3
-!static/
-!media/
+db.sqlite3
+static/
+media/
