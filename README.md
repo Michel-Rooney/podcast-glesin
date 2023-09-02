@@ -6,7 +6,7 @@ O projeto consiste no desenvolvimento de uma API (Interface de Programação de 
 [TeenPod API - DOCS](https://documenter.getpostman.com/view/23133439/2s9Xy5LW2t)
 
 ### 📌 On Air
-[TeenPod API - Deploy](https://teenpod.onrender.com)
+[TeenPod API - Deploy](https://teenpod.pythonanywhere.com/)
 
 ## 🚀 Começando
 
