@@ -17,6 +17,7 @@ pyinotify==0.9.6
 PySocks==1.7.1
 pytest==7.4.0
 pytest-django==4.5.2
+python-decouple==3.8
 python-dotenv==1.0.0
 requests==2.31.0
 selenium==4.10.0
