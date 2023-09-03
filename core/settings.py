@@ -10,11 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import os
+import dj_database_url
 from pathlib import Path
 from datetime import timedelta
-import dj_database_url
-
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,16 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'INSECURE')
+SECRET_KEY = config('SECRET_KEY', 'INSECURE')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.environ.get('DEBUG') == '1' else False
+DEBUG = True if config('DEBUG') == '1' else False
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(', ')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', '').split(', ')
 
-CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(', ')
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', '').split(', ')
 
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', '').split(', ')
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', '').split(', ')
 
 
 # Application definition
@@ -87,12 +86,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-USE_EXTERNAL_DATABASE = True if os.environ.get('USE_EXTERNAL_DATABASE') == '1' else False  # noqa: E501
+USE_EXTERNAL_DATABASE = True if config('USE_EXTERNAL_DATABASE') == '1' else False  # noqa: E501
 
 if USE_EXTERNAL_DATABASE:
     DATABASES = {
         'default': dj_database_url.config(
-            default=os.environ.get('DATABASE_URL'),
+            default=config('DATABASE_URL'),
         )
     }
 else:
@@ -170,6 +169,6 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'BLACKLIST_AFTER_ROTATION': False,
-    'SIGNING_KEY': os.environ.get('SECRET_KEY_JWT', 'INSECURE'),
+    'SIGNING_KEY': config('SECRET_KEY_JWT', 'INSECURE'),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
