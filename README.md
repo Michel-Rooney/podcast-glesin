@@ -38,7 +38,7 @@ git clone https://github.com/Michel-Rooney/teen-pod.git
 Entre na pasta:
 
 ```
-cd teen-pod
+cd teenpod-api
 ```
 
 Crie um ambiente virtual:
@@ -53,7 +53,7 @@ Ative o ambiente virtual:
 source venv/bin/activate
 
 # Quando ativo, irar aparecer (venv) no inicio
-(venv) user@maquina ~/teen-pod$
+(venv) user@maquina ~/teenpod-api$
 ```
 
 **Note:** Para desativar rode o comando
