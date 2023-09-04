@@ -11,6 +11,25 @@ from . import models
 from .utils import get_podcast
 
 
+def resize_image(image, new_width=800):
+    image_full_path = os.path.join(settings.MEDIA_URL, image.path)
+    image_pillow = Image.open(image_full_path)
+    original_width, original_height = image_pillow.size
+
+    if original_width <= new_width:
+        image_pillow.close()
+        return
+
+    new_height = round((new_width * original_height) / original_width)
+
+    new_image = image_pillow.resize((new_width, new_height), Image.LANCZOS)
+    new_image.save(
+        image_full_path,
+        optimize=True,
+        quality=50,
+    )
+
+
 class UserSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='app:user-api-detail')
     password = serializers.CharField(write_only=True)
@@ -38,7 +57,7 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
 
         if user.avatar:
-            self.resize_image(user.avatar, 170)
+            resize_image(user.avatar, 170)
 
         user.save()
         return user
@@ -55,25 +74,6 @@ class UserSerializer(serializers.ModelSerializer):
             raise ValidationError(self.messages)
 
         return super().validate(attrs)
-
-    @staticmethod
-    def resize_image(image, new_width=800):
-        image_full_path = os.path.join(settings.MEDIA_URL, image.path)
-        image_pillow = Image.open(image_full_path)
-        original_width, original_height = image_pillow.size
-
-        if original_width <= new_width:
-            image_pillow.close()
-            return
-
-        new_height = round((new_width * original_height) / original_width)
-
-        new_image = image_pillow.resize((new_width, new_height), Image.LANCZOS)
-        new_image.save(
-            image_full_path,
-            optimize=True,
-            quality=50,
-        )
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -133,7 +133,7 @@ class PodcastSerializer(serializers.ModelSerializer):
         podcast = super().save(**kwargs)
 
         if podcast.cover:
-            self.resize_image(podcast.cover, 1080)
+            resize_image(podcast.cover, 1080)
 
         podcast.save()
         return podcast
@@ -158,22 +158,3 @@ class PodcastSerializer(serializers.ModelSerializer):
                 'Formato de arquivo inválido. Somente arquivos .mp3 permitidos'
             )
         return attr
-
-    @staticmethod
-    def resize_image(image, new_width=800):
-        image_full_path = os.path.join(settings.MEDIA_URL, image.path)
-        image_pillow = Image.open(image_full_path)
-        original_width, original_height = image_pillow.size
-
-        if original_width <= new_width:
-            image_pillow.close()
-            return
-
-        new_height = round((new_width * original_height) / original_width)
-
-        new_image = image_pillow.resize((new_width, new_height), Image.LANCZOS)
-        new_image.save(
-            image_full_path,
-            optimize=True,
-            quality=50,
-        )

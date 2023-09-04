@@ -132,5 +132,5 @@ static/
 
 # Add again for course purpose
 !db.sqlite3
-!static/
+static/
 !media/

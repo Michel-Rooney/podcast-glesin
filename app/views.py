@@ -9,9 +9,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework import status
 
-from . import models
-from . import serializers
-from . import utils
+from . import models, serializers, utils
 from .permissions import IsOwner, IsOwnerComment
 
 
