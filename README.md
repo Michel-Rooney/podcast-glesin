@@ -25,7 +25,7 @@ python3 --version
 python --version
 ```
 
-**Note:** Os comandos abaixo seram na maioria relacionados a linux
+**Note:** Os comandos abaixo serão na maioria relacionados a linux
 
 ### 🔧 Instalação
 
